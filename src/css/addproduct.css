@@ -1,0 +1,206 @@
+@import url("https://rsms.me/inter/inter.css");
+
+:root {
+  --color-gray: #737888;
+  --color-lighter-gray: #e3e5ed;
+  --color-light-gray: #f7f7fa;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", sans-serif;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--color-gray);
+}
+
+hr {
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-light-gray);
+  border: 0;
+  margin: 2rem 0;
+}
+
+.container4 {
+     max-width: 90rem;
+     margin: 0 auto 47px;
+     padding: 2%;
+   }
+  
+ 
+.form {
+  display: grid;
+  grid-gap: 1rem;
+ }
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-lighter-gray);
+  padding: .5rem;
+  border-radius: .25rem;
+}
+
+.field__label {
+  color: var(--color-gray);
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem
+}
+
+.field__input {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  font-weight: bold;
+  font-size: 16px;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+}
+.field:focus-within {
+  border-color: #000;
+}
+
+.fields {
+  display: grid;
+  grid-gap: 1rem;
+}
+.fields--2 {
+  grid-template-columns: 1fr 1fr;
+}
+.fields--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.next {
+  background-color: #016dff;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+   color: #fff;
+   padding: 0.8rem 3rem 0.8rem 3rem;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  outline: 0;
+}
+.next:focus-visible {
+  background-color: #0553bc;
+}
+
+
+
+/* view product css  */
+
+.datatable-filter-demo .p-paginator .p-paginator-current {
+  margin-left: auto;
+}
+
+.datatable-filter-demo .p-progressbar {
+  height: .5rem;
+  background-color: #D8DADC;
+}
+
+.datatable-filter-demo .p-progressbar .p-progressbar-value {
+  background-color: #607D8B;
+}
+
+.datatable-filter-demo .table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datatable-filter-demo .p-datepicker {
+  min-width: 25rem;
+}
+
+.datatable-filter-demo .p-datepicker td {
+  font-weight: 400;
+}
+
+.datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-header {
+  padding: 1rem;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+.datatable-filter-demo .p-datatable.p-datatable-customers .p-paginator {
+  padding: 1rem;
+}
+
+.datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-thead > tr > th {
+  text-align: left;
+}
+
+.datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td {
+  cursor: auto;
+}
+
+.datatable-filter-demo .p-datatable.p-datatable-customers .p-dropdown-label:not(.p-placeholder) {
+  text-transform: uppercase;
+}
+
+.datatable-filter-demo .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-thead > tr > th,
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tfoot > tr > td {
+      display: none !important;
+  }
+
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tbody > tr {
+      border-bottom: 1px solid var(--layer-2);
+  }
+
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td {
+      text-align: left;
+      display: block;
+      border: 0 none !important;
+      width: 100% !important;
+      float: left;
+      clear: left;
+      border: 0 none;
+  }
+
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+      padding: .4rem;
+      min-width: 30%;
+      display: inline-block;
+      margin: -.4rem 1rem -.4rem -.4rem;
+      font-weight: bold;
+  }
+
+  .datatable-filter-demo .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td .p-progressbar {
+      margin-top: .5rem;
+  }
+}
