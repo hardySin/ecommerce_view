@@ -36,7 +36,7 @@ const AddProduct = (): any => {
         category.current = data;
         })
       .catch((error:any) => {});
-  }, []);
+  }, []); 
 
   const addProduct = useCallback(() => {
     console.log("product useCallback",product)
