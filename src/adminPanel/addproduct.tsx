@@ -38,7 +38,7 @@ const AddProduct = (): any => {
       .catch((error:any) => {});
   }, []); 
 
-  const addProduct = useCallback(() => {
+  const addProduct = () => {
     console.log("product useCallback",product)
     productService.addProduct(product)
       .then((response:any) => {
@@ -47,7 +47,7 @@ const AddProduct = (): any => {
 
       })
       .catch((error:any) => {});
-  }, []);
+  }
   
   return (
     <>

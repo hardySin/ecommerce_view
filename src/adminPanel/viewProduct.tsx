@@ -27,7 +27,7 @@ const ViewProduct = () => {
       .then((response: any) => {
         console.log("response", response);
 
-        const data: Array<any> = response.data.result;
+        const data: Array<any> = response.data;
         productview.current = data;
         console.log("productview.current", productview.current);
         setLoading(true);
@@ -45,7 +45,7 @@ const ViewProduct = () => {
     setselectedCategory(e.value);
   };
 
-  const nameBodyTemplate = (rowData: any) => {
+  const productTemplate = (rowData: any) => {
     return (
       <React.Fragment>
         <span className="p-column-title">Name</span>
@@ -54,24 +54,58 @@ const ViewProduct = () => {
     );
   };
 
-  let view = () => {
-    history.push("/productValue");
+  const categoryTemplate = (rowData: any) => {
+    return (
+      <React.Fragment>
+        <span className="p-column-title">Name</span>
+        {rowData.category_id.categoryName}
+      </React.Fragment>
+    );
   };
 
-  let edit = () => {
-    history.push("/productValue");
+  const statusTemplate = (rowData: any) => {
+    return (
+      <React.Fragment>
+        <span className="p-column-title">Name</span>
+        {rowData.status}
+      </React.Fragment>
+    );
   };
+
+  const priceTemplate = (rowData: any) => {
+    return (
+      <React.Fragment>
+        <span className="p-column-title">Name</span>
+        {rowData.price}
+      </React.Fragment>
+    );
+  };
+
+  let view = (id:any) => {
+     history.push({
+      pathname: '/view',
+      state: {product_id:id}  
+  });
+  };
+
+  let edit = (id:any) => {
+    history.push({
+      pathname: '/edit',
+      state: {product_id:id}  
+  });
+
+   };
   const actionBodyTemplate = (rowData: any) => {
     return (
       <React.Fragment>
         <Button
           label="View"
-          onClick={() => view()}
+          onClick={() => view(rowData._id)}
           className="p-button-raised p-button-text"
         />
         <Button
           label="Edit"
-          onClick={() => edit()}
+          onClick={() => edit(rowData._id)}
           className="p-button-raised p-button-success p-button-text"
         />
         <Button
@@ -157,28 +191,28 @@ const ViewProduct = () => {
             <Column
               field="productname"
               header="Product Name"
-              body={nameBodyTemplate}
+              body={productTemplate}
               filter
               filterPlaceholder="Search by Product Name"
             />
             <Column
               field="category"
               header="Category"
-              body={nameBodyTemplate}
+              body={categoryTemplate}
               filter
               filterElement={categoryFilter}
             />
             <Column
               field="status"
               header="Status"
-              body={nameBodyTemplate}
+              body={statusTemplate}
               filter
               filterElement={statusFilter}
             />
             <Column
               field="price"
               header="Price"
-              body={nameBodyTemplate}
+              body={priceTemplate}
               filter
               filterPlaceholder="Search by Price"
             />

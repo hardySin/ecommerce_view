@@ -9,6 +9,4 @@ export interface IProduct {
     productDescription:string ;
     metaTitle:string ;
     metaKeyword:string ;
-    // product_image: Array<any>;
-    // generalInfo : string; 
-}
+ }

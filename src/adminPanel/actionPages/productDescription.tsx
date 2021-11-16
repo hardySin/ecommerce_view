@@ -1,14 +1,29 @@
 import "../../css/addproduct.css";
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { IProduct } from "../../Interfaces/product";
+import { useLocation } from "react-router-dom";
+import product_description from "../../services/product_description";
 
 const ProductDescription = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
+  const location: any = useLocation();
 
   const changeHandler = (e: any) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     console.log("product ", product);
   };
+
+  useEffect(() => {
+
+    let prod_id = location.state.product_id;
+    console.log(typeof prod_id, prod_id)
+    product_description.getDescription(prod_id)
+      .then((response: any) => {
+        console.log("response", response.data)
+      }).catch((error: any) => {
+
+      })
+  }, [location]);
 
   return (
     <>
@@ -49,7 +64,7 @@ const ProductDescription = (): any => {
             </label>
           </div>
         </div>
-        <button className="next">Add Description</button>
+        {(location.pathname == "/view" ? "" : <button className="next">Edit Description</button>)}
       </div>
     </>
   );
