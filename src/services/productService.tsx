@@ -10,6 +10,12 @@ const getAllProducts =() => {
   return axios.get("http://localhost:8080/api/getAllProducts");
 };
 
+const getProduct =(product_id:any) => {
+  console.log("product_id", product_id)
+   return axios.post("http://localhost:8080/api/getProduct", product_id);
+};
+ 
 
 
-export default {addProduct,getAllProducts}
+
+export default {addProduct,getAllProducts,getProduct}

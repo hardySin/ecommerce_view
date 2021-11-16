@@ -1,21 +1,36 @@
 import "../../css/addproduct.css";
-import React, { useRef, useState } from "react";
- import { IProduct } from "../../Interfaces/product";
- 
+import React, { useRef, useEffect,useState } from "react";
+import { IProduct } from "../../Interfaces/product";
+import { useLocation } from "react-router-dom";
+import productSerivce  from "../../services/productService";
 const Product = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
- 
+  const location:any = useLocation();
+
   const changeHandler = (e: any) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     console.log("product ", product);
   };
 
- 
+  useEffect(() => {
+
+    let prod_id = location.state.product_id;
+
+    console.log(typeof prod_id ,prod_id) 
+    productSerivce.getProduct(prod_id)
+    .then((response:any)=>
+    {
+        console.log("response" ,response.data)
+    }).catch((error:any)=>{
+
+    })
+ }, [location]);
+
   return (
     <>
       <div className="container4">
-        <h2>Add Product</h2>
-        <hr />
+        <h2>Product</h2>
+        <hr/>
 
         <div className="form">
           <div className="fields fields--2">
@@ -88,9 +103,9 @@ const Product = (): any => {
             </label>
           </div>
         </div>
-        <button className="next">Add Products</button>
-</div>
-     </>
+        {(location.pathname=="/view" ?"":<button className="next">Edit Product</button>) }
+       </div>
+    </>
   );
 };
 

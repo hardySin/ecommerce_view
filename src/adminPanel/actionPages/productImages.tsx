@@ -1,75 +1,81 @@
 import "../../css/addproduct.css";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { FileUpload } from "primereact/fileupload";
 import { Col, Container, Row } from "react-bootstrap";
 import wristwatch from "../images/wristwatch.jpg";
 import { Image } from "primereact/image";
 import { IProduct } from "../../Interfaces/product";
-
+import { useLocation } from "react-router-dom";
+import ProductImage from "../../services/ProductImage";
 const ProductImages = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
   const fileUploadRef = useRef<any>(null);
+  let uploadurl: any;
+  const location: any = useLocation();
+  const [isLoading, setLoading] = useState<boolean>(false);
+  let images = useRef<Array<any>>([]);
+  let imageurl: Array<string> = [];
 
   const changeHandler = (e: any) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     console.log("product ", product);
   };
 
-  const uploadHandler = (e: any) => {
-    console.log("onUpload ", e);
-  };
+  useEffect(() => {
+    let prod_id = location.state.product_id;
+    ProductImage.getProductImage(prod_id)
+      .then((response: any) => {
+        console.log("response", response.data)
+        const data: Array<any> = response.data[0].product_image_ids;
+        data.map((items: any, key: any) => {
+          items.productImage.map((item2: any, key2: any) => {
+            console.log("key item2", key2, item2.filename)
+            imageurl.push(item2.filename)
+          })
+        })
+
+        console.log("imageurl", imageurl)
+        images.current = imageurl;
+        setLoading(true)
+
+      }).catch((error: any) => {
+      })
+  }, [location,]);
 
   return (
     <>
-      <FileUpload
-        name="images"
-        accept="image/*"
-        customUpload={true}
-        uploadHandler={uploadHandler}
-        chooseLabel="Choose"
-        maxFileSize={1000000}
-        multiple
-        emptyTemplate={
-          <p className="p-m-0">Drag and drop files to here to upload.</p>
-        }
-      />
 
-      <FileUpload
-        name="demo[]"
-        url="https://primefaces.org/primereact/showcase/upload.php"
-        onUpload={uploadHandler}
-        multiple
-        accept="image/*"
-        maxFileSize={1000000}
-        emptyTemplate={
-          <p className="p-m-0">Drag and drop files to here to upload.</p>
-        }
-      />
+      {(isLoading) ?
+        <>
+          <FileUpload
+            name="images"
+            url={`http://localhost:8080/api/addProductImage?product_id=${location.state.product_id}`}
+            multiple
+            accept="image/*"
+            maxFileSize={1000000}
+            emptyTemplate={
+              <p className="p-m-0">Drag and drop files to here to upload.</p>
+            }
+          />
 
-      {/* <div className="container4">
-<Container>
-<Row>
-<Col>
-<Image src={wristwatch} alt="Image" width="150"  />
-</Col>
-<Col>
-<Image src={wristwatch} alt="Image" width="150"  />
-</Col>
-<Col>
-<Image src={wristwatch} alt="Image" width="150"  />
-</Col>
-<Col>
-<Image src={wristwatch} alt="Image" width="150"  />
-</Col>
-<Col>
-<Image src={wristwatch} alt="Image" width="150"  />
-</Col>
+          <div className="container4">
+            <Container>
+              <Row>
+                {
+                  images.current.map((items: any, key: any) => {
+                    return (<Col key={key}> <Image src={"http://localhost:8080/uploads/" + items} alt="Image" width="150" /></Col>)
+                  }
+                  )}
 
-</Row>
-</Container>
-</div> */}
+              </Row>
+            </Container>
+          </div>
+        </>
+        : ""}
+
     </>
   );
 };
+
 
 export default ProductImages;

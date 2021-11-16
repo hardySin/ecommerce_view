@@ -63,7 +63,13 @@ export default function Routes() {
           <Footer />
         </Route>
 
-        <Route path="/productValue">
+        <Route path="/view">
+          <Header />
+          <ProductValue></ProductValue>
+          <Footer />
+        </Route>
+
+        <Route path="/edit">
           <Header />
           <ProductValue></ProductValue>
           <Footer />
