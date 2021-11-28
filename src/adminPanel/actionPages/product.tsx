@@ -4,9 +4,12 @@ import { IProduct } from "../../Interfaces/product";
 import { useLocation } from "react-router-dom";
 import productSerivce from "../../services/productService";
 import categoryService from "../../services/categoryService";
+import Loader from "../../staticPage/loader";
 const Product = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
-  const location: any = useLocation();
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading1, setLoading1] = useState<boolean>(false);
+   const location: any = useLocation();
   let productName = useRef<any>();
   let subText = useRef<any>();
   let status = useRef<any>();
@@ -25,29 +28,39 @@ const Product = (): any => {
     let prod_id = location.state.product_id;
 
     console.log(typeof prod_id, prod_id)
-    productSerivce.getProduct(prod_id)
-      .then((response: any) => {
-        console.log("response", response.data)
-        productName.current.value = response.data[0].productName;
-        subText.current.value = response.data[0].subText;
-        status.current.value = response.data[0].status
-        price.current.value = response.data[0].price
-        discount.current.value = response.data[0].discount
-        categoryName.current = response.data[0].category_id.categoryName;
-      }).catch((error: any) => {
-      })
     categoryService.getAllCategory()
       .then((response: any) => {
         const data: Array<any> = response.data.result;
         category.current = data;
-      })
+        setTimeout(()=>{
+           setLoading1(true);
+        }, 2000)
+       })
       .catch((error: any) => { });
 
-  }, [location]);
+    productSerivce.getProduct(prod_id)
+      .then((response: any) => {
+
+        console.log("categoryName :", response.data.result1[0].productName)
+        productName.current.value = response.data.result1[0].productName;
+        subText.current.value = response.data.result1[0].subText;
+        status.current.value = response.data.result1[0].status;
+        price.current.value = response.data.result1[0].price;
+        discount.current.value = response.data.result1[0].discount;
+
+        categoryName.current = response.data.result1[0].category_id.categoryName;
+        console.log("categoryName :", categoryName.current)
+        setLoading(true)
+        console.log("isLoading :", isLoading)
+      }).catch((error: any) => {
+      })
+
+  }, [location, isLoading]);
 
   return (
-    <>
-      <div className="container4">
+       <>
+        { isLoading1 ?
+        <div className="container4">
         <h2>Product</h2>
         <hr />
 
@@ -76,28 +89,31 @@ const Product = (): any => {
           </div>
 
           <div className="fields fields--2">
-            <label className="field">
-              <span className="field__label">Category</span>
-              <select
-                ref={categoryName}
-                className="field__input"
-                name="category"
-                onChange={changeHandler}
-              >
-                <option disabled>Select the Category</option>
+          {isLoading ?
+          <label className="field">
+          <span className="field__label">Category</span>
+          <select
+            // ref={categoryName}
+            className="field__input"
+            name="category"
+            onChange={changeHandler}
+          >
+            <option disabled>Select the Category</option>
 
-                {category.current.map((item: any) => (
-                  (item.categoryName == categoryName.current) ?
-                    <option selected key={item._id} value={item._id}>
-                      {item.categoryName}
-                    </option>
-                    : <option key={item._id} value={item._id}>
-                      {item.categoryName}
-                    </option>
-                ))}
-              </select>
-            </label>
-
+            {category.current.map((item: any) => (
+              (item.categoryName == categoryName.current) ?
+                <option selected key={item._id} value={item._id}>
+                  {item.categoryName}
+                </option>
+                : <option key={item._id} value={item._id}>
+                  {item.categoryName}
+                </option>
+            ))}
+          </select>
+        </label>
+           :
+          ""
+          }
             <label className="field">
               <span className="field__label">Status</span>
               <select
@@ -137,8 +153,11 @@ const Product = (): any => {
         </div>
         {(location.pathname == "/view" ? "" : <button className="next">Edit Product</button>)}
       </div>
-    </>
-  );
+       :
+       <Loader></Loader>}
+         
+      </>
+   );
 };
 
 export default Product;
