@@ -42,35 +42,49 @@ const ProductImages = (): any => {
       })
   }, [location,]);
 
+  const viewImage = () => {
+    return (
+      <div className="container4">
+        <Container>
+          <Row>
+            {
+              images.current.map((items: any, key: any) => {
+                return (<Col key={key}> <Image src={"http://localhost:8080/uploads/" + items} alt="Image" width="150" /></Col>)
+              }
+              )}
+
+          </Row>
+        </Container>
+      </div>
+    )
+  }
+
+  const fileupload = () => {
+    return (
+      <FileUpload
+        name="images"
+        url={`http://localhost:8080/api/addProductImage?product_id=${location.state.product_id}`}
+        multiple
+        accept="image/*"
+        maxFileSize={1000000}
+        emptyTemplate={
+          <p className="p-m-0">Drag and drop files to here to upload.</p>
+        }
+      />
+    )
+  }
   return (
     <>
 
       {(isLoading) ?
-        <>
-          <FileUpload
-            name="images"
-            url={`http://localhost:8080/api/addProductImage?product_id=${location.state.product_id}`}
-            multiple
-            accept="image/*"
-            maxFileSize={1000000}
-            emptyTemplate={
-              <p className="p-m-0">Drag and drop files to here to upload.</p>
-            }
-          />
-
-          <div className="container4">
-            <Container>
-              <Row>
-                {
-                  images.current.map((items: any, key: any) => {
-                    return (<Col key={key}> <Image src={"http://localhost:8080/uploads/" + items} alt="Image" width="150" /></Col>)
-                  }
-                  )}
-
-              </Row>
-            </Container>
-          </div>
-        </>
+        (location.pathname == "/view"
+          ?
+          (images.current.length > 0) ? viewImage() : <h3>No Image Uploaded</h3>
+          :
+          <>
+            {fileupload()}
+            {(images.current.length > 0) ? viewImage() : <h3>No Image Uploaded</h3>}
+          </>)
         : ""}
 
     </>
