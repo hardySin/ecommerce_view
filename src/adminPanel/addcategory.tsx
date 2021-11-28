@@ -2,6 +2,7 @@ import "../css/addproduct.css";
 import React, {
    useState,
   useCallback,
+  useRef
 } from "react";
 import { ICategory } from "../Interfaces/category";
 import categoryService from "../services/categoryService";
@@ -10,6 +11,8 @@ import categoryService from "../services/categoryService";
 
 const AddCategory = (): any => {
   const [category, setCategory] = useState<ICategory>(Object);
+  let myform1 = useRef<any>();
+
   // let socket = useContext(ProductService);
 
   const changeHandler = (e: any) => {
@@ -22,6 +25,7 @@ const AddCategory = (): any => {
     categoryService.addCategory(category)
     .then((response:any)=>
     {
+      myform1.current.reset();
 
     }).catch((error:any)=>{})
   }, [category]);
@@ -31,6 +35,7 @@ const AddCategory = (): any => {
       <div className="container4">
         <h2>Add Category</h2>
         <hr />
+        <form ref={myform1}>
         <div className="form">
           <div className="fields fields--2">
             <label className="field">
@@ -49,6 +54,7 @@ const AddCategory = (): any => {
          <button className="next" onClick={() => addCategory()}>
           Add Category
         </button>
+        </form>
       </div>
     </>
   );

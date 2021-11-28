@@ -79,8 +79,6 @@ export default function Routes() {
         <CreateAccount></CreateAccount>      
        </Route>
 
-         
-        
         <Route path="*">
           <Error></Error>
         </Route>

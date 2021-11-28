@@ -7,7 +7,9 @@ import product_description from "../../services/product_description";
 const ProductDescription = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
   const location: any = useLocation();
-
+  let metaKeyword = useRef<any>();
+  let metaTitle = useRef<any>();
+  let productDescription = useRef<any>();
   const changeHandler = (e: any) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     console.log("product ", product);
@@ -20,6 +22,10 @@ const ProductDescription = (): any => {
     product_description.getDescription(prod_id)
       .then((response: any) => {
         console.log("response", response.data)
+        metaKeyword.current.value = response.data[0].metaKeyword;
+        metaTitle.current.value = response.data[0].metaTitle;
+        productDescription.current.value = response.data[0].productDescription;
+
       }).catch((error: any) => {
 
       })
@@ -35,6 +41,7 @@ const ProductDescription = (): any => {
             <label className="field">
               <span className="field__label">Description</span>
               <input
+                ref={productDescription}
                 className="field__input"
                 type="text"
                 name="description"
@@ -47,6 +54,7 @@ const ProductDescription = (): any => {
             <label className="field">
               <span className="field__label">Meta Title</span>
               <input
+                ref={metaTitle}
                 className="field__input"
                 type="text"
                 name="metatitle"
@@ -56,6 +64,7 @@ const ProductDescription = (): any => {
             <label className="field">
               <span className="field__label">Meta Keyword</span>
               <input
+                ref={metaKeyword}
                 className="field__input"
                 type="text"
                 name="metaKeyword"

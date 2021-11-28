@@ -9,6 +9,7 @@ const ProductGerenalInfo = (): any => {
   const [general, setgeneral] = useState<IGeneralInfo>(Object);
   const [render, setrender] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
+  let brand = useRef<any>();
 
   const location: any = useLocation();
   let generalInfo = useRef<Array<any>>([]);
@@ -27,12 +28,13 @@ const ProductGerenalInfo = (): any => {
         console.log("getGeneralInfo", response)
         const data: Array<any> = response.data;
         generalInfo.current = data;
-        console.log("generalInfo.current", generalInfo.current)
+        console.log("generalInfo.current", generalInfo.current, response.data[0].brand)
         setLoading(true)
+        brand.current.value = generalInfo.current[0].brand;
       }).catch((error: any) => {
 
       })
-  }, [location, render]);
+  }, [render]);
 
   const addGeneralInfo = () => {
     let prod_id = location.state.product_id
@@ -68,6 +70,7 @@ const ProductGerenalInfo = (): any => {
               <label className="field">
                 <span className="field__label">Brand Name</span>
                 <input
+                  ref={brand}
                   className="field__input"
                   type="text"
                   name="brandname"
