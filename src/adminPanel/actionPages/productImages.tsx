@@ -7,6 +7,7 @@ import { Image } from "primereact/image";
 import { IProduct } from "../../Interfaces/product";
 import { useLocation } from "react-router-dom";
 import ProductImage from "../../services/ProductImage";
+import Loader from "../../staticPage/loader";
 const ProductImages = (): any => {
   const [product, setProduct] = useState<IProduct>(Object);
   const fileUploadRef = useRef<any>(null);
@@ -85,7 +86,7 @@ const ProductImages = (): any => {
             {fileupload()}
             {(images.current.length > 0) ? viewImage() : <h3>No Image Uploaded</h3>}
           </>)
-        : ""}
+        : <Loader></Loader>}
 
     </>
   );

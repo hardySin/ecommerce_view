@@ -4,11 +4,14 @@ import { IProduct } from "../../Interfaces/product";
 import { useLocation } from "react-router-dom";
 import generalInformation from "../../services/generalInformation";
 import { IGeneralInfo } from "../../Interfaces/generalInfo";
+import Loader from "../../staticPage/loader";
 
 const ProductGerenalInfo = (): any => {
   const [general, setgeneral] = useState<IGeneralInfo>(Object);
   const [render, setrender] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading1, setLoading1] = useState<boolean>(false);
+
   let brand = useRef<any>();
 
   const location: any = useLocation();
@@ -30,6 +33,7 @@ const ProductGerenalInfo = (): any => {
         generalInfo.current = data;
         console.log("generalInfo.current", generalInfo.current, response.data[0].brand)
         setLoading(true)
+        setLoading1(true)
         brand.current.value = generalInfo.current[0].brand;
       }).catch((error: any) => {
 
@@ -60,7 +64,9 @@ const ProductGerenalInfo = (): any => {
 
   return (
     <>
-      {(isLoading) ?
+            { isLoading1 ?
+
+      (isLoading ?
 
         <div className="container4">
           <h2>General Information</h2>
@@ -81,9 +87,11 @@ const ProductGerenalInfo = (): any => {
           </div>
           {location.pathname == "/view" ? "" : (generalInfo.current.length > 0 ? <button className='next' onClick={editGerenalInfo}>Edit Information</button> : <button className='next' onClick={addGeneralInfo}>Add Information</button>)}
         </div>
-        : ""}
-
-    </>
+        : "")
+        :
+        <Loader></Loader>
+      }
+     </>
   );
 };
 
