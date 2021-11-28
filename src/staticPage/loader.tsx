@@ -5,7 +5,9 @@ const Loader = (): any => {
 
     return (
         <>
-        <div className="loader">
+        <div className="main">
+         <div className="loader">
+         </div>
          </div>
          </>
     )
