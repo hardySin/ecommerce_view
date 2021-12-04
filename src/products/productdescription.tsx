@@ -1,21 +1,19 @@
 import "../css/productdescription.css";
 import "../scss/productInformation.scss";
 import "../css/Shipping.css";
-
-// import '../css/magnifier.css'
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { DOMAttributes } from "react";
 import item1 from "../images/item-4.jpg";
 import item2 from "../images/item-7.jpg";
 import wristwatch from "../images/wristwatch.jpg";
-
 import ReactSlick from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { Rating } from 'primereact/rating';
 import Comments from "./productComment";
 import { Divider } from 'primereact/divider';
+import { useLocation } from "react-router-dom";
+import productSerivce from "../services/productService";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -26,19 +24,16 @@ declare module "react" {
 
 const ProductDescription = (): any => {
   const [val2, setVal2] = useState<any>();
+  const location: any = useLocation();
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [product, setProduct] = useState<any>(Object);
+  const [image, setImage] = useState<any>();
+  const [description, setDescription] = useState<any>();
 
   let images: any[] = [
-    // { name: wristwatch, vw: "355w" },
-    // { name: wristwatch, vw: "481w" },
-    // { name: wristwatch, vw: "584w" },
-    // { name: wristwatch, vw: "687w" },
-    // { name: wristwatch, vw: "770w" },
-    // { name: wristwatch, vw: "861w" },
-    // { name: wristwatch, vw: "955w" },
-    // { name: wristwatch, vw: "1033w" },
-    // { name: wristwatch, vw: "1112w" },
-    { name: wristwatch, vw: "1192w" },
-    { name: wristwatch, vw: "1200w" },
+    { name: "http://localhost:8080/uploads/" + image, vw: "1112w" },
+    { name: "http://localhost:8080/uploads/" + image, vw: "1192w" },
+    { name: "http://localhost:8080/uploads/" + image, vw: "1200w" },
   ];
 
   let settings: any = {
@@ -48,6 +43,23 @@ const ProductDescription = (): any => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  useEffect(() => {
+    productSerivce.getProduct(location.state.product_id)
+      .then((response: any) => {
+        const data: Array<any> = response.data.result1[0];
+        setProduct(data);
+        setImage(response.data.result1[0].product_image_ids[0].productImage[0].filename)
+        setDescription(response.data.result1[0].productDescription_id.productDescription)
+        console.log(response.data.result1[0].product_image_ids[0].productImage[0].filename)
+        console.log(response.data.result1[0].productDescription_id.productDescription)
+
+        console.log("product", data)
+      })
+      .catch((error: any) => { });
+
+  }, [isLoading]);
+
 
   let srcSet = (): string => {
     return images
@@ -60,13 +72,13 @@ const ProductDescription = (): any => {
   const dataSource: any = [
     {
       srcSet: srcSet(),
-      small: wristwatch,
-      large: wristwatch,
+      small: image,
+      large: image,
     },
     {
       srcSet: srcSet(),
-      small: wristwatch,
-      large: wristwatch,
+      small: image,
+      large: image,
     },
   ];
 
@@ -89,13 +101,13 @@ const ProductDescription = (): any => {
               smallImage: {
                 alt: "Wristwatch by Versace",
                 isFluidWidth: true,
-                src: wristwatch,
+                src: "http://localhost:8080/uploads/" + image,
                 srcSet: srcSet(),
                 sizes:
                   "(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px",
               },
               largeImage: {
-                src: wristwatch,
+                src: "http://localhost:8080/uploads/" + image,
                 width: 1200,
                 height: 2000,
               },
@@ -120,11 +132,9 @@ const ProductDescription = (): any => {
         <div className="right-column">
           <div className="product-description">
             <span>Headphones</span>
-            <h1>Beats EP</h1>
+            <h1>{product.productName}</h1>
             <p>
-              The preferred choice of a vast range of acclaimed DJs. Punchy,
-              bass-focused sound and high isolation. Sturdy headband and on-ear
-              cushions suitable for live performance
+              {description}
             </p>
           </div>
 
@@ -162,7 +172,7 @@ const ProductDescription = (): any => {
           <AccordionTab header="DESCRIPTION">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-             </p>
+            </p>
           </AccordionTab>
           <AccordionTab header="INFORMATION">
             <table>
@@ -181,10 +191,10 @@ const ProductDescription = (): any => {
           <AccordionTab header="REVIEWS">
             <div className="container4">
 
-            <Comments></Comments>
-            <Divider />
+              <Comments></Comments>
+              <Divider />
 
-               <h1>Add a review</h1>
+              <h1>Add a review</h1>
               <p>Your email address will not be published.</p>
               <Rating value={val2} cancel={false} onChange={(e) => setVal2(e.value)} />
 
@@ -219,7 +229,7 @@ const ProductDescription = (): any => {
               <hr></hr>
               <button className="next">Add Your Review</button>
             </div>
- 
+
           </AccordionTab>
         </Accordion>
       </div>

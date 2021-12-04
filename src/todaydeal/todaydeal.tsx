@@ -7,13 +7,14 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import productSerivce from "../services/productService";
+import { useHistory } from "react-router";
 
 
 const TodayDeal = (): any => {
 
   const [isLoading, setLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<any[]>();
-
+  const history: any = useHistory();
 
   useEffect(() => {
 
@@ -21,18 +22,25 @@ const TodayDeal = (): any => {
       .then((response: any) => {
         const data: Array<any> = response.data;
         setProduct(data);
-       })
+      })
       .catch((error: any) => { });
 
-  }, [isLoading]);
+  }, [isLoading]); 
 
-  const productTemplate = (item:any) => {
-    let snap=item.product_image_ids[0].productImage[0].filename;
-    console.log("snap" ,snap)
-     return (
+  const viewproduct = (id:any) => {
+     history.push({
+      pathname: '/viewproduct',
+      state: { product_id: id }
+    });
+   }
+
+  const productTemplate = (item: any) => {
+    let snap = item.product_image_ids[0].productImage[0].filename;
+    console.log("snap", snap)
+    return (
       <>
-         <a href="#">
-          <div className="img-event"> <img className="group list-group-image img-fluid" src={"http://localhost:8080/uploads/" + snap } alt=""></img> </div>
+        <a href="#" onClick={()=>viewproduct(item._id)} >
+          <div className="img-  event"> <img className="group list-group-image img-fluid" src={"http://localhost:8080/uploads/" + snap} alt=""></img> </div>
           <div className="itemlist-text">
             <h3 className="itemname-title">{item.productName}</h3>
             <div className="itemname-text">{item.productDescription_id.productDescription}</div>
