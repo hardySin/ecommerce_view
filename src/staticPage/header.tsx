@@ -1,13 +1,6 @@
 import '../css/custom.css'
-
-import companyLogo from '../images/logo-white.png';
-import userIcon from '../images/user.png';
 import CartBreif from '../products/cartbreif';
 import React, { useState, useEffect, useRef, MutableRefObject, RefObject } from 'react';
-import { OverlayPanel } from 'primereact/overlaypanel';
-import { Column } from 'primereact/column';
-import item1 from '../images/item-4.jpg';
-import { Sidebar } from 'primereact/sidebar';
 import LoginPage from '../authentication_pages/loginpage';
 
 declare module 'react' {
@@ -61,7 +54,6 @@ const Header = (): any => {
               <div className="top-noti-user">
                 <div className="top-notify" ><a href="#"><i onClick={() => setVisibleRight(true)} className="las la-shopping-cart"></i><span>0</span></a></div>
                 <div className="top-notify"><a href="#"><i onClick={() => setVisibleRight(true)} className="las la-heart"></i><span>0</span></a></div>
-
                 <div className="top-user-profile">
                   <a href="#">
                     {/* <img src={userIcon} alt=""></img> */}
