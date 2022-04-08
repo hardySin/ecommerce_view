@@ -1,5 +1,4 @@
 import '../css/custom.css'
-import item1 from '../images/item-7.jpg'
 import React, { useState, useEffect } from 'react';
 import productSerivce from "../services/productService";
 
@@ -33,20 +32,19 @@ const ViewProducts = (): any => {
 					<div id="itemlist" className="row view-group">
 						{
 							product.map((item) => {
-								let snap=item.product_image_ids[0].productImage[0].filename;
-
+								let snap = item.product_image_ids[0].productImage[0].filename;
 								return (
 									<>
 										<div className="item col-sm-6 col-lg-3  text-center mycol-6">
 											<div className="itemlist-text">
 												<a href="#">
-													<div className="img-event"> <img className="group list-group-image img-fluid" src={"http://localhost:8080/uploads/" + snap } alt=""></img> </div>
+													<div className="img-event"> <img className="group list-group-image img-fluid" src={"http://localhost:8080/uploads/" + snap} alt=""></img> </div>
 													<div className="itemlist-text">
 														<h3 className="itemname-title">{item.productName}-{item.productDescription_id.productDescription}</h3>
 														<div className="item-price">₹1,399   <span>₹2,990</span></div>
 														<div className="bue-text">VIEW</div>
 														<div className="bue-text">ADD TO CART</div>
- 													</div>
+													</div>
 												</a>
 												<div className="wishlist-icon"><i className="las la-heart"></i></div>
 											</div>

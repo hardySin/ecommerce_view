@@ -2,11 +2,6 @@ import "../css/productdescription.css";
 import "../scss/productInformation.scss";
 import "../css/Shipping.css";
 import React, { useState, useEffect } from "react";
-import { DOMAttributes } from "react";
-import item1 from "../images/item-4.jpg";
-import item2 from "../images/item-7.jpg";
-import wristwatch from "../images/wristwatch.jpg";
-import ReactSlick from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { Rating } from 'primereact/rating';
@@ -51,8 +46,6 @@ const ProductDescription = (): any => {
         setProduct(data);
         setImage(response.data.result1[0].product_image_ids[0].productImage[0].filename)
         setDescription(response.data.result1[0].productDescription_id.productDescription)
-        console.log(response.data.result1[0].product_image_ids[0].productImage[0].filename)
-        console.log(response.data.result1[0].productDescription_id.productDescription)
 
         console.log("product", data)
       })

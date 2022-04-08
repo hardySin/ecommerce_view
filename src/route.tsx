@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Banner from "./banners/banner";
 import Menu from "./menu/menu";
 import DiscountAccessories from "./products/discountaccessories";
@@ -9,7 +8,6 @@ import Footer from "./staticPage/footer";
 import Header from "./staticPage/header";
 import RecentlyView from "./todaydeal/RecentlyViewed";
 import TodayDeal from "./todaydeal/todaydeal";
-import LoginPage from "./authentication_pages/loginpage";
 
 import AddtoCart from "./products/addTocart";
 import CheckOut from "./products/checkout";
@@ -17,12 +15,13 @@ import AdminPanel from "./adminPanel/adminPanel";
 import Error from "./error/error";
 import ProductValue from "./adminPanel/productValue";
 import CreateAccount from "./authentication_pages/createAccount";
+import AddProduct from "./adminPanel/addproduct";
 
 export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/home">
+        <Route path="/home">
           <Header />
           <Menu />
           <Banner />
@@ -37,7 +36,6 @@ export default function Routes() {
           <Header />
           <Menu />
           <ProductDescription />
-          <ViewProducts />
           <RecentlyView />
           <Footer />
         </Route>
@@ -45,7 +43,6 @@ export default function Routes() {
         <Route path="/viewcart">
           <Header />
           <Menu />
-
           <AddtoCart />
           <RecentlyView />
           <Footer />
@@ -60,24 +57,26 @@ export default function Routes() {
         <Route path="/adminpanel">
           <Header />
           <AdminPanel></AdminPanel>
-          <Footer />
+        </Route>
+
+        <Route path="/addproduct">
+          <Header />
+          <AddProduct></AddProduct>
         </Route>
 
         <Route path="/view">
           <Header />
           <ProductValue></ProductValue>
-          <Footer />
         </Route>
 
         <Route path="/edit">
           <Header />
           <ProductValue></ProductValue>
-          <Footer />
         </Route>
 
         <Route path="/createAccount">
-        <CreateAccount></CreateAccount>      
-       </Route>
+          <CreateAccount></CreateAccount>
+        </Route>
 
         <Route path="*">
           <Error></Error>

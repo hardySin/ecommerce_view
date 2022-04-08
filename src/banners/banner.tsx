@@ -1,17 +1,9 @@
 import '../css/banner.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Carousel from 'react-bootstrap/Carousel';
-
 import React, { useState, useEffect } from 'react';
-import { Button } from 'primereact/button';
-import companyLogo from '../images/logo-white.jpg';
-import userIcon from '../images/user.jpg';
 import shoe from '../images/shoe.png';
 import women from '../images/women.png';
-
-import banner from '../images/banner.png';
-import banner2 from '../images/banner2.png';
-
 import { IProduct } from '../Interfaces/product';
 
 declare module 'react' {
